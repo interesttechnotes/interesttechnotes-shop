@@ -103,7 +103,7 @@ export default function Products() {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-      setProducts(data.products || []);
+      setProducts(data.files || []);
     };
     fetchProducts();
   }, []);
@@ -117,23 +117,41 @@ export default function Products() {
         </button>
       </div>
 
-      <div style={styles.grid}>
-        {products.map((p) => (
-          <div key={p._id} style={styles.card}>
-            <img
-              src={p.thumbnail || "https://via.placeholder.com/200"}
-              alt={p.title}
-              style={styles.image}
-            />
-            <h3 style={styles.title}>{p.title}</h3>
-            <p style={styles.category}>{p.category}</p>
-            <strong>₹{p.price}</strong>
-            <button onClick={() => handleBuy(p._id)} style={styles.buyButton}>
-              Buy Now
-            </button>
-          </div>
-        ))}
-      </div>
+<div style={styles.grid}>
+  {console.log("Products List:", products)}
+  {products.map((file) => (
+    <div key={file.id} style={styles.card}>
+      {/* File Icon */}
+      <img
+        src="https://cdn-icons-png.flaticon.com/512/281/281760.png"
+        alt="file"
+        style={styles.image}
+      />
+
+      <h3 style={styles.title}>{file.name}</h3>
+
+      <p style={styles.category}>{file.mimeType}</p>
+
+      <strong>₹{file.amount}</strong>
+
+      {/* View File */}
+      {/* <a
+        href={file.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={styles.viewButton}
+      >
+        View File
+      </a> */}
+
+      {/* Buy */}
+      <button onClick={() => handleBuy(file.id)} style={styles.buyButton}>
+        Buy Now
+      </button>
+    </div>
+  ))}
+</div>
+
     </div>
   );
 }
