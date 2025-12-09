@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Products from "./pages/Products";
+import Navbar from "./components/Navbar";
 import { GoogleCallbackHandler } from "./components/GoogleCallbackHandler";
 
 export default function App() {
@@ -17,12 +18,13 @@ function AppContent() {
 
   return (
     <>
+      {/* Navbar only when logged in */}
+      {isLoggedIn && <Navbar />}
 
       <Routes>
-        {/* Google OAuth callback */}
         <Route path="/google/callback" element={<GoogleCallbackHandler />} />
 
-        {/* Auth routes */}
+        {/* Public routes */}
         <Route
           path="/"
           element={isLoggedIn ? <Navigate to="/products" replace /> : <Login />}
@@ -37,7 +39,6 @@ function AppContent() {
           path="/products"
           element={isLoggedIn ? <Products /> : <Navigate to="/login" replace />}
         />
-    
       </Routes>
     </>
   );

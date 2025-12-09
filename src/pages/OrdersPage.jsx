@@ -102,7 +102,7 @@ const OrdersPage = () => {
 // ✅ Inline CSS styles
 const styles = {
   container: {
-    maxWidth: "900px",
+    // maxWidth: "900px",
     margin: "40px auto",
     padding: "20px",
     borderRadius: "12px",

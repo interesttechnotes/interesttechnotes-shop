@@ -6,6 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Login() {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,9 +23,6 @@ export default function Login() {
       });
 
       const data = await res.json();
-      if (import.meta.env.MODE === "development") {
-        console.log("-login data-", data);
-      }
 
       if (data.token) {
         localStorage.setItem("token", data.token);
@@ -34,24 +32,23 @@ export default function Login() {
         alert(data.message || "Login failed");
       }
     } catch (err) {
-      console.error("Login Error:", err);
-      alert("An unexpected error occurred.");
+      alert("Something went wrong.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={{ marginBottom: 20 }}>Login</h2>
+    <div style={page.container}>
+      <div style={page.card}>
+        <h2 style={page.title}>Welcome Back</h2>
+        <p style={page.subtitle}>Login to continue</p>
 
-        <form onSubmit={loginUser}>
+        <form onSubmit={loginUser} style={{ width: "100%", marginTop: 20 }}>
           <input
-            // type="email"
             type={import.meta.env.MODE === "development" ? "text" : "email"}
             placeholder="Email"
-            style={styles.input}
+            style={page.input}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -60,21 +57,21 @@ export default function Login() {
           <input
             type="password"
             placeholder="Password"
-            style={styles.input}
+            style={page.input}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
-          <button type="submit" style={styles.button} disabled={loading}>
+          <button type="submit" style={page.button} disabled={loading}>
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <div style={styles.divider}>
-          <span style={styles.line}></span>
-          <span style={{ color: "#888" }}>or</span>
-          <span style={styles.line}></span>
+        <div style={page.dividerWrapper}>
+          <div style={page.line}></div>
+          <span style={page.dividerText}>or</span>
+          <div style={page.line}></div>
         </div>
 
         <GoogleLoginButton />
@@ -83,51 +80,74 @@ export default function Login() {
   );
 }
 
-const styles = {
+const page = {
   container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    backgroundColor: "#f5f7fa",
+    padding: "20px",
+    background: "var(--bg-color)",
+    transition: "0.3s",
   },
   card: {
-    width: 360,
-    backgroundColor: "#fff",
+    width: "380px",
+    background: "var(--card-bg)",
     borderRadius: 12,
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-    padding: "30px 25px",
+    padding: "40px 32px",
+    boxShadow: "0 8px 25px var(--nav-shadow)",
     textAlign: "center",
+    transition: "0.3s",
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 700,
+    marginBottom: 5,
+    color: "var(--text-color)",
+  },
+  subtitle: {
+    fontSize: 15,
+    color: "var(--text-color)",
+    opacity: 0.7,
+    marginBottom: 15,
   },
   input: {
     width: "100%",
-    padding: 10,
-    marginBottom: 12,
-    border: "1px solid #ccc",
-    borderRadius: 6,
-    fontSize: 14,
+    padding: "12px 14px",
+    marginBottom: 14,
+    borderRadius: 8,
+    border: "1px solid var(--border-color)",
+    fontSize: 15,
+    outline: "none",
+    background: "var(--bg-color)",
+    color: "var(--text-color)",
+    transition: "0.3s",
   },
   button: {
     width: "100%",
-    padding: 12,
-    backgroundColor: "#111",
+    padding: "12px",
+    fontSize: 16,
+    background: "var(--primary-color)",
     color: "#fff",
-    fontWeight: 600,
     border: "none",
-    borderRadius: 6,
+    borderRadius: 8,
     cursor: "pointer",
-    transition: "background 0.3s",
+    transition: "0.3s",
   },
-  divider: {
-    margin: "20px 0",
+  dividerWrapper: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    margin: "22px 0",
   },
   line: {
+    flex: 1,
     height: 1,
-    width: 40,
-    backgroundColor: "#ccc",
-    margin: "0 8px",
+    backgroundColor: "var(--border-color)",
+  },
+  dividerText: {
+    margin: "0 10px",
+    color: "var(--text-color)",
+    opacity: 0.7,
+    fontSize: 14,
   },
 };

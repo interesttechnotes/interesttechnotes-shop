@@ -1,4 +1,3 @@
-// src/components/auth/GoogleLoginButton.jsx
 import React from "react";
 
 export const GoogleLoginButton = () => {
@@ -13,14 +12,33 @@ export const GoogleLoginButton = () => {
       prompt: "consent",
     });
 
-    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
   };
 
   return (
     <button
       onClick={handleGoogleLogin}
-      className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition"
+      style={{
+        width: "100%",
+        padding: "12px",
+        borderRadius: 8,
+        border: "1px solid var(--border-color)",
+        background: "var(--card-bg)",
+        cursor: "pointer",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 8,
+        fontSize: 15,
+        fontWeight: 500,
+        color: "var(--text-color)",
+        transition: "0.3s",
+      }}
     >
+      <img
+        src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+        width={20}
+      />
       Continue with Google
     </button>
   );

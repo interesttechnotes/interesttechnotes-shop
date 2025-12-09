@@ -36,7 +36,7 @@ export const GoogleCallbackHandler = () => {
                         localStorage.setItem("user", JSON.stringify(data.user));
 
                         // Redirect to dashboard or home
-                        navigate("/");
+                        navigate("/products");
                     } else {
                         throw new Error("Invalid response from Google authentication");
                     }
