@@ -43,7 +43,7 @@ function AppContent() {
         {/* Protected routes */}
         <Route
           path="/products"
-          element={isLoggedIn ? <Products /> : <Navigate to="/login" replace />}
+          element={(isLoggedIn || import.meta.env.MODE === "development") ? <Products /> : <Navigate to="/login" replace />}
         />
       </Routes>
     </>
