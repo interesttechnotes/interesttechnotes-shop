@@ -85,6 +85,14 @@ export default function Products() {
     }
   };
 
+const formatDate = (iso) => {
+  if (!iso) return "—";
+  return new Date(iso).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -133,6 +141,11 @@ export default function Products() {
               <p style={styles.subtitle}>
                 {subtitle}
               </p>
+              <div style={styles.dateRow}>
+  <span>Created: {formatDate(file?.wholeFileObject?.createdTime)}</span>
+  <span>Updated: {formatDate(file?.wholeFileObject?.modifiedTime)}</span>
+</div>
+
               <strong>₹{price}</strong>
 
               <button
@@ -189,6 +202,14 @@ const styles = {
     WebkitBoxOrient: "vertical",
     textOverflow: "ellipsis",
   },
+dateRow: {
+  fontSize: 11,
+  opacity: 0.85,
+  display: "flex",
+  justifyContent: "space-between",
+  marginTop: 6,
+  marginBottom: 6,
+},
 
   buyButton: {
     marginTop: 10,
